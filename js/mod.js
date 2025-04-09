@@ -1,9 +1,10 @@
 //Mod menu block
 mod = {}
 mod.injected = false
-mod.modMenuHTML = '<div>\n            <details id="modmenu">\n                <summary>mods</summary>\n                <div id="modmenu-div" class="details-div" style="font-size: 70%;height: 400px;overflow: scroll;max-width: 50rem;">\n                  <input onclick="mod.qolToggle();" type="checkbox" id="mod-qol" name="QoL mod" style="width:17px; height:17px;">\n                    <label for="mod-qol" title="Enable QoL mod">QoL mod</label>\n                    <br>\n                  <input onclick="mod.sytheToggle();" type="checkbox" id="mod-sythe" name="Sythe mods" style="width:17px; height:17px;">\n                    <label for="mod-sythe" title="Enable the sythe mods.">Sythe mods</label>\n                    <br>\n                  <input onclick="mod.randToggle();" type="checkbox" id="mod-rand" name="Random mod" style="width:17px; height:17px;">\n                    <label for="mod-sythe" title="Enable Random ideas mod">Random ideas mod</label>\n                    <br>\n                  <input onclick="mod.mobileToggle();" type="checkbox" id="mod-mobile" name="Mobile UI" style="width:17px; height:17px;">\n                    <label for="mod-mobile" title="Add Mobile UI">Mobile UI</label>\n                    <br>\n                  <input onclick="mod.controllerToggle();" type="checkbox" id="mod-controller" name="Controller" style="width:17px; height:17px;">\n                    <label for="mod-controller" title="Add Controller usage">Controller</label>\n                    <br>\n                  <input onclick="mod.glassCannonToggle();" type="checkbox" id="mod-GC" name="Glass Cannon mod" style="width:17px; height:17px;">\n                    <label for="mod-GC" title="Enable glass cannon mod">Glass Cannon mod</label>\n                  <br>\n                  <label for="mod-GC-dmgMult" title="Damage multiplier" style="margin-left: 15px;">Damage multiplier:</label>\n                  <input type="text" id="mod-GC-dmgMult" name="damage multiplier" autocomplete="off" spellcheck="false" minlength="1" style="width: 120px;">\n                  <br>\n                  <label for="mod-GC-dmgTakenMult" title="Damage Taken multiplier" style="margin-left: 15px;">Damage Taken multiplier:</label>\n                  <input type="text" id="mod-GC-dmgTakenMult" name="damage taken multiplier" autocomplete="off" spellcheck="false" minlength="1" style="width: 120px;">\n                  <svg class="SVG-button SVG-button-splash" id="save-GC-button" width="81" height="20" stroke="none" fill="#333" font-size="10px" font-family="Arial, sans-serif" onclick="mod.saveGC()" style="margin-left: 15px;">\n                  <text x="10" y="10">Save</text>\n                  </svg>\n                  <br>\n                  <input onclick="mod.autoInjectToggle();" type="checkbox" id="mod-autoInject" name="AutoInject" style="width:17px; height:17px;">\n                    <label for="mod-autoInject" title="Automaticly inject mods when page opens.">AutoInjector</label>\n                    <br>\n                  <input onclick="mod.forceLoreToggle();" type="checkbox" id="mod-forceLore" name="ForceLore" style="width:17px; height:17px;">\n                    <label for="mod-forceLore" title="Force lore even with mods enabled.">Force Lore</label>\n                    <br>\n                  <svg class="SVG-button SVG-button-splash" id="inject-button" width="82" height="45" stroke="none" fill="#333" font-size="30px" font-family="Arial, sans-serif" onclick="mod.inject()">\n                  <text x="10" y="32">Inject</text>\n                  </svg>\n                </div>\n            </details>\n        </div>'
+mod.modMenuHTML = '<div>\n            <details id="modmenu">\n                <summary>mods</summary>\n                <div id="modmenu-div" class="details-div" style="font-size: 70%;height: 400px;overflow: scroll;max-width: 50rem;">\n                  <input onclick="mod.qolToggle();" type="checkbox" id="mod-qol" name="QoL mod" style="width:17px; height:17px;">\n                    <label for="mod-qol" title="Enable QoL mod">QoL mod</label>\n                    <br>\n                  <input onclick="mod.sytheToggle();" type="checkbox" id="mod-sythe" name="Sythe mods" style="width:17px; height:17px;">\n                    <label for="mod-sythe" title="Enable the sythe mods.">Sythe mods</label>\n                    <br>\n                  <input onclick="mod.randToggle();" type="checkbox" id="mod-rand" name="Random mod" style="width:17px; height:17px;">\n                    <label for="mod-sythe" title="Enable Random ideas mod">Random ideas mod</label>\n                    <br>\n                  <input onclick="mod.mobileToggle();" type="checkbox" id="mod-mobile" name="Mobile UI" style="width:17px; height:17px;">\n                    <label for="mod-mobile" title="Add Mobile UI">Mobile UI</label>\n                    <br>\n                  <input onclick="mod.controllerToggle();" type="checkbox" id="mod-controller" name="Controller" style="width:17px; height:17px;">\n                    <label for="mod-controller" title="Add Controller usage">Controller</label>\n                    <br>\n                  <input onclick="mod.stopwatchToggle();" type="checkbox" id="mod-stopwatch" name="Stopwatch" style="width:17px; height:17px;">\n                    <label for="mod-stopwatch" title="Add speedrun timer">Stopwatch</label>\n                    <br>\n                  <input onclick="mod.glassCannonToggle();" type="checkbox" id="mod-GC" name="Glass Cannon mod" style="width:17px; height:17px;">\n                    <label for="mod-GC" title="Enable glass cannon mod">Glass Cannon mod</label>\n                  <br>\n                  <label for="mod-GC-dmgMult" title="Damage multiplier" style="margin-left: 15px;">Damage multiplier:</label>\n                  <input type="text" id="mod-GC-dmgMult" name="damage multiplier" autocomplete="off" spellcheck="false" minlength="1" style="width: 120px;">\n                  <br>\n                  <label for="mod-GC-dmgTakenMult" title="Damage Taken multiplier" style="margin-left: 15px;">Damage Taken multiplier:</label>\n                  <input type="text" id="mod-GC-dmgTakenMult" name="damage taken multiplier" autocomplete="off" spellcheck="false" minlength="1" style="width: 120px;">\n                  <svg class="SVG-button SVG-button-splash" id="save-GC-button" width="81" height="20" stroke="none" fill="#333" font-size="10px" font-family="Arial, sans-serif" onclick="mod.saveGC()" style="margin-left: 15px;">\n                  <text x="10" y="10">Save</text>\n                  </svg>\n                  <br>\n                  <input onclick="mod.autoInjectToggle();" type="checkbox" id="mod-autoInject" name="AutoInject" style="width:17px; height:17px;">\n                    <label for="mod-autoInject" title="Automaticly inject mods when page opens.">AutoInjector</label>\n                    <br>\n                  <input onclick="mod.forceLoreToggle();" type="checkbox" id="mod-forceLore" name="ForceLore" style="width:17px; height:17px;">\n                    <label for="mod-forceLore" title="Force lore even with mods enabled.">Force Lore</label>\n                    <br>\n                  <svg class="SVG-button SVG-button-splash" id="inject-button" width="82" height="45" stroke="none" fill="#333" font-size="30px" font-family="Arial, sans-serif" onclick="mod.inject()">\n                  <text x="10" y="32">Inject</text>\n                  </svg>\n                </div>\n            </details>\n        </div>'
 document.getElementById("info").innerHTML += mod.modMenuHTML
-
+mod.aboutHTML = '<br><strong>Then some rando named btcool came along and modified my work.</strong><br>Credit to <a href="https://github.com/Whyisthisnotavalable/n-scythe"> Whyisthisnotavalable</a> for making the sythe mods.<br>Credit to <a href="https://github.com/Ant-Throw-Pology/n-qol">Ant-Throw-Pology</a> for making the QoL mod.<br>Credit to <a href="https://github.com/kgurchiek/">kgurchiek</a> for making the mobile mod and the controller mod and the stopwatch mod.<br>And of course, credit to <a href="https://github.com/landgreen/">landgreen</a> for making n-gon itself.'
+document.getElementById("info").children[3].children[0].children[1].children[1].innerHTML += mod.aboutHTML
 //Settings block
 if (localSettings.doQoL === undefined) localSettings.doQoL = false
 document.getElementById("mod-qol").checked = localSettings.doQoL
@@ -21,6 +22,8 @@ if (localSettings.doMobile === undefined) localSettings.doMobile = false
 document.getElementById("mod-mobile").checked = localSettings.doMobile
 if (localSettings.doController === undefined) localSettings.doController = false
 document.getElementById("mod-controller").checked = localSettings.doController
+if (localSettings.doStopwatch === undefined) localSettings.doStopwatch = false
+document.getElementById("mod-stopwatch").checked = localSettings.doStopwatch
 if (localSettings.forceLore === undefined) localSettings.forceLore === false
 document.getElementById("mod-forceLore").checked = localSettings.forceLore
 if (localSettings.autoInject === undefined) localSettings.autoInject === false
@@ -60,6 +63,10 @@ mod.controllerToggle = function() {
   localSettings.doController = !localSettings.doController;
   if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
 }
+mod.stopwatchToggle = function() { 
+  localSettings.doStopwatch = !localSettings.doStopwatch;
+  if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+}
 mod.forceLoreToggle = function() {
   localSettings.forceLore = !localSettings.forceLore;
   if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
@@ -72,6 +79,7 @@ mod.inject = function() {
   if (localSettings.doGlassCannon) {mod.glassCannon()};
   if (localSettings.doMobile) {mod.mobile()};
   if (localSettings.doController) {mod.controller()};
+  if (localSettings.doStopwatch) {mod.stopwatch()};
   if (localSettings.doRand) {mod.randomID()};
   document.getElementById("inject-button").setAttribute("onclick",'alert("Already injected mods.")')
   document.getElementById("inject-button").setAttribute("disabled","disabled")
@@ -81,6 +89,7 @@ mod.inject = function() {
   document.getElementById("mod-GC").setAttribute("disabled","disabled")
   document.getElementById("mod-mobile").setAttribute("disabled","disabled")
   document.getElementById("mod-controller").setAttribute("disabled","disabled")
+  document.getElementById("mod-stopwatch").setAttribute("disabled","disabled")
   if (!localSettings.forceLore) {mod.startGameOld = simulation.startGame; simulation.startGame = function() {mod.startGameOld(); tech.setCheating()}; mod.oldGeneratePauseLeft = build.generatePauseLeft; build.generatePauseLeft = function() { mod.oldGeneratePauseLeft(); document.getElementById("pause-grid-left").innerHTML = document.getElementById("pause-grid-left").innerHTML.replace("lore disabled","lore disabled due to mods")}}
   console.log("Injected mods");
 }
@@ -274,6 +283,10 @@ mod.randomID = function() {
 }
 // Mobile block
 mod.mobile = (async () => { const scriptText = await (await fetch('https://raw.githubusercontent.com/kgurchiek/n-gon-mobile/main/main.js')).text(); var script = document.createElement('script'); script.type = 'text/javascript'; script.textContent = scriptText; document.head.appendChild(script); })
+// Controller block
+mod.controller = async () => { const scriptText = await (await fetch('https://raw.githubusercontent.com/kgurchiek/n-gon-controller/main/main.js')).text(); var script = document.createElement('script'); script.type = 'text/javascript'; script.textContent = scriptText; document.head.appendChild(script); }
+// Stopwatch block
+mod.stopwatch = async () => { const scriptText = await (await fetch('https://raw.githubusercontent.com/kgurchiek/n-gon-stopwatch/main/main.js')).text(); var script = document.createElement('script'); script.type = 'text/javascript'; script.textContent = scriptText; document.head.appendChild(script); }
 // Glass cannon block
 mod.glassCannon = function() { 
   mod.glass_oldDefense = m.defense;
@@ -281,7 +294,6 @@ mod.glassCannon = function() {
   m.defense = function() {return localSettings.dmgTakenMult * mod.glass_oldDefense()}; 
   tech.damageFromTech = function() {return localSettings.dmgMult * mod.glass_oldDamage()}
 }
-// Controller block
-mod.controller = async () => { const scriptText = await (await fetch('https://raw.githubusercontent.com/kgurchiek/n-gon-controller/main/main.js')).text(); var script = document.createElement('script'); script.type = 'text/javascript'; script.textContent = scriptText; document.head.appendChild(script); }
+
 // This must remain at the bottom for all this to work.
 if (localSettings.autoInject) {mod.inject()}
