@@ -1,9 +1,13 @@
 2-d physics rogue-lite platformer shooter(but modded)
 
-Random ideas mod & glass cannon mod by me
+Random ideas mod & glass cannon mod by me;
+
 Scythe mods by Whyisthisnotavalable
+
 QoL mod by Ant-Throw-Pology
+
 Stopwatch, controller, & mobile by kgurchiek
+
 n-gon by landgreen
 
 https://btcool.github.io/n-gon/
