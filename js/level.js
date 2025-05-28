@@ -16,15 +16,17 @@ const level = {
     levels: [],
     start() {
         if (level.levelsCleared === 0) { //this code only runs on the first level
-            // simulation.enableConstructMode() //tech.giveTech('motion sickness')  //used to build maps in testing mode
+
+            // simulation.enableConstructMode()  //used to build maps in testing mode
+            // tech.giveTech('motion sickness') //used to build maps in testing mode for precise mouse control
             // simulation.difficultyMode = 1
             // build.isExperimentRun = true
 
             // simulation.isHorizontalFlipped = true
-            // level.levelsCleared = 9
+            // level.levelsCleared = 11
             // level.updateDifficulty()
             // tech.giveTech("performance")
-            // m.maxHealth = m.health = 1//10000000
+            // m.maxHealth = m.health = 10000000
             // m.displayHealth();
 
             // m.maxEnergy = m.energy = 10000000
@@ -44,21 +46,21 @@ const level = {
             // simulation.molecularMode = 2
             // m.takeDamage(0.1);
             // b.giveGuns("nail gun") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
-            // b.giveGuns("harpoon") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
+            // b.giveGuns("super balls") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.giveGuns("laser") //0 nail gun  1 shotgun  2 super balls 3 wave 4 missiles 5 grenades  6 spores  7 drones  8 foam  9 harpoon  10 mine  11 laser
             // b.guns[9].ammo = 100000000
             // tech.laserColor = "#fff"
             // tech.laserColorAlpha = "rgba(255, 255, 255, 0.5)"
 
             // requestAnimationFrame(() => { tech.giveTech("rebar") });
-            // tech.giveTech("missile guidance")
+            // tech.giveTech("smelting")
             // tech.addJunkTechToPool(0.5)
-            // for (let i = 0; i < 1; ++i) tech.giveTech("quantum Zeno effect")
-            // for (let i = 0; i < 1; ++i) tech.giveTech("irradiated drones")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("planned obsolescence")
+            // for (let i = 0; i < 1; ++i) tech.giveTech("ricochet")
             // m.skin.egg();
             // for (let i = 0; i < 1; ++i) tech.giveTech("anthropic principle")
             // requestAnimationFrame(() => { for (let i = 0; i < 1; i++) tech.giveTech("surfing") });
-            // requestAnimationFrame(() => { for (let i = 0; i < 1; i++) tech.giveTech("spalling") });
+            // requestAnimationFrame(() => { level.blurryChoices = true });
             // for (let i = 0; i < 1; i++) tech.giveTech("wear")
             // m.lastKillCycle = m.cycle
             // for (let i = 0; i < 7; i++) powerUps.directSpawn(450, -50, "field");
@@ -69,7 +71,7 @@ const level = {
 
             level[simulation.isTraining ? "walk" : "initial"]() //normal starting level **************************************************
 
-            // for (let i = 0; i < 1; i++) spawn.finalBoss(1100 + 100 * i, -100)
+            // for (let i = 0; i < 6; i++) spawn.freezer(1100 + 100 * i, -100 - i * 100)
             // for (let i = 0; i < 1; i++) spawn.slasher2(1100 + 100 * i, -200, 50)
             // for (let i = 0; i < 3; i++) spawn.freezer(1100 + 100 * i, -300)
             // for (let i = 0; i < 1; i++) spawn.slasher4(1100 + 100 * i, -500, 50)
@@ -78,7 +80,7 @@ const level = {
             // for (let i = 0; i < 1; i++) spawn.hopsploder(1100 + 100 * i, -500)
             // for (let i = 0; i < 1; ++i) spawn.spiderBoss(1900, -500)
             // for (let i = 0; i < 1; ++i) powerUps.directSpawn(m.pos.x + 50 * Math.random(), m.pos.y + 50 * Math.random(), "entanglement");
-            // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 450, m.pos.y + 50 * Math.random(), "gun");
+            // for (let i = 0; i < 2; ++i) powerUps.directSpawn(m.pos.x + 450, m.pos.y + 50 * Math.random(), "tech");
             // for (let i = 0; i < 20; ++i) powerUps.directSpawn(m.pos.x + 500 * Math.random(), m.pos.y + 500 * Math.random(), "coupling");
             // for (let i = 0; i < 2; i++) powerUps.spawn(player.position.x + Math.random() * 50, player.position.y - Math.random() * 50, "field", false);
             //lore testing
@@ -219,8 +221,18 @@ const level = {
             let rate = tech.interestRate
             if (level.onLevel < level.levels.length - 1) {//make sure it's not on the lore level which has an undefined name
                 const levelName = level.levels[level.onLevel]
-                if (levelName === "final") rate *= 1 / 3
+                if (levelName === "final") rate *= 1 / 5
                 if (levelName === "subway") rate *= 1 / 5
+            }
+            if (powerUps.research.count > 0 && rate > 0) {
+                const r = Math.ceil(rate * powerUps.research.count)
+                simulation.inGameConsole(`${(rate * 100).toFixed(0)}<span class='color-symbol'>%</span> <span class='color-m'>interest</span> on <span class='color-r'>research</span> <span class='color-symbol'>=</span> ${r > 20 ? r + powerUps.orb.research(1) : powerUps.orb.research(r)}`)
+                powerUps.spawnDelay("research", r, 4);
+            }
+            if (m.coupling > 0 && rate > 0) {
+                const c = Math.ceil(rate * m.coupling / 3)
+                powerUps.spawnDelay("coupling", c, 4);
+                simulation.inGameConsole(`${(rate * 100).toFixed(0)}<span class='color-symbol'>%</span> <span class='color-m'>interest</span> on <span class='color-coupling'>coupling</span> <span class='color-symbol'>=</span> ${c > 20 ? c + powerUps.orb.coupling(1) : powerUps.orb.coupling(c)}`)
             }
 
             // let ammoSum = 0
@@ -239,16 +251,6 @@ const level = {
             //     powerUps.spawnDelay("ammo", a, 4);
             //     simulation.inGameConsole(`${(rate * 100).toFixed(0)}<span class='color-symbol'>%</span> <span class='color-m'>interest</span> on <span class='color-g'>ammo</span> <span class='color-symbol'>=</span> ${a > 20 ? a + powerUps.orb.ammo(1) : powerUps.orb.ammo(a)}`)
             // }
-            if (powerUps.research.count > 0) {
-                const r = Math.ceil(rate * powerUps.research.count)
-                simulation.inGameConsole(`${(rate * 100).toFixed(0)}<span class='color-symbol'>%</span> <span class='color-m'>interest</span> on <span class='color-r'>research</span> <span class='color-symbol'>=</span> ${r > 20 ? r + powerUps.orb.research(1) : powerUps.orb.research(r)}`)
-                powerUps.spawnDelay("research", r, 4);
-            }
-            if (m.coupling > 0) {
-                const c = Math.ceil(0.5 * rate * m.coupling)
-                powerUps.spawnDelay("coupling", c, 4);
-                simulation.inGameConsole(`${(rate * 100).toFixed(0)}<span class='color-symbol'>%</span> <span class='color-m'>interest</span> on <span class='color-coupling'>coupling</span> <span class='color-symbol'>=</span> ${c > 20 ? c + powerUps.orb.coupling(1) : powerUps.orb.coupling(c)}`)
-            }
             // const healPerOrb = (powerUps.heal.size() / 40 / (simulation.healScale ** 0.25)) ** 2
             // const h = Math.ceil(rate * m.health / healPerOrb)
             // powerUps.spawnDelay("heal", h, 4);
@@ -271,7 +273,7 @@ const level = {
                     index = i
                 }
             }
-            if (index) { //eject it
+            if (index !== null) { //eject it
                 const effect = Math.pow(1.1, tech.tech[index].count)
                 simulation.inGameConsole(`<strong>${(effect).toFixed(2)}x</strong> <strong class='color-d'>damage</strong> <em>//from obsolescence</em>`, 360)
                 m.damageDone *= effect
@@ -662,12 +664,22 @@ const level = {
 
             }
         },
+        {
+            description: "blurry choices",
+            effect() {
+                level.blurryChoices = true
+            },
+            remove() {
+                level.blurryChoices = false
+            }
+        },
     ],
     isMobShields: false,
     junkAdded: 0,
     isNextLevelPowerUps: false,
     isMobRespawn: false,
     fewerChoices: false,
+    blurryChoices: false,
     isNoDuplicate: false,
     is2xAmmo: false,
     isReducedEnergy: false,
@@ -752,7 +764,7 @@ const level = {
                         // ${spawn.mobTypeSpawnOrder[level.levelsCleared]} Tier ${spawn.mobTierSpawnOrder[level.levelsCleared]}
                         // <br>${spawn.mobTypeSpawnOrder[level.levelsCleared - 1]} Tier ${spawn.mobTierSpawnOrder[level.levelsCleared - 1]}`
                     } else {
-                        text += `<div class= "blurry-text" style="user-select: none;">${level.levels[i]}</div>` //blurry text
+                        text += `<div class= "blur-text" style="user-select: none;">${level.levels[i]}</div>` //blurry text
                         // `spawn<span class='color-symbol'>.</span><span class='color-symbol'>(</span>x<span class='color-symbol'>,</span>y<span class='color-symbol'>)</span>`
                     }
                 }
@@ -1013,7 +1025,7 @@ const level = {
                         let text = `
                             <div class="choose-grid-module" id = "choose-training" style = "font-size: 1em; padding:10px;color:#333;">
                                 <h2 style="text-align: center;letter-spacing: 5px;">training</h2>
-                                Begin the <strong>guided tutorial</strong> that shows you how to use your ${powerUps.orb.field()} and ${powerUps.orb.gun()}.
+                                Begin the <strong>guided tutorial</strong> that shows how to use ${powerUps.orb.field()} and ${powerUps.orb.gun()}.
                             </div>
                             <div class="choose-grid-module" id = "choose-unPause" style = "font-size: 1em; padding:10px;color:#333;">
                                 <h2 style="text-align: center; letter-spacing: 7px;">play</h2>
@@ -2294,7 +2306,7 @@ const level = {
             }
         }
     },
-    laser(p1, p2, damage = 0.14, color = "#f00") {
+    laser(p1, p2, damage = 0.12, color = "#f00") {
         return {
             isOn: true,
             position: p1,
@@ -2576,7 +2588,9 @@ const level = {
                     }
                     const mobTargets = Matter.Query.collides(this, mob)
                     for (let i = 0; i < mobTargets.length; i++) {
+                        // if (!mobTargets[i].bodyA.isBoss)
                         pushBlock(mobTargets[i].bodyA)
+                        // if (!mobTargets[i].bodyB.isBoss)
                         pushBlock(mobTargets[i].bodyB)
                     }
                     let pushPowerUp = (who) => {
@@ -7370,9 +7384,14 @@ const level = {
             spawn.mapRect(-4000, 2000, 8000, 3000); //floor
         }
         let buildNormalMap = function () {
+            //flip button 
             buttons.push(level.button(-1895, -1600, 126, true, false, "hsl(330, 100%, 50%)"))
             buttons[buttons.length - 1].isUp = false
             spawn.mapRect(-1675, -2025, 50, 250);
+
+            //disable laser button
+            buttons.push(level.button(-1500, 1315, 126, true, true, "hsl(330, 100%, 50%)"))
+            buttons[buttons.length - 1].isUp = true
 
             simulation.ephemera.push({
                 name: "buttons up",
@@ -7380,27 +7399,26 @@ const level = {
                 do() {
                     this.count--
                     if (this.count < 0) {
-                        for (let i = 0; i < buttons.length; i++) buttons[i].isUp = true
+                        // for (let i = 0; i < buttons.length; i++) buttons[i].isUp = true
+                        buttons[0].isUp = true
                         simulation.removeEphemera(this.name);
                         isFlipping = false
                     }
                 },
             })
 
-            lasers.push(level.laser({ x: -1100, y: 1990 }, { x: -1100, y: -2000 })) ////x, y, width, height, damage = 0.002)
+            lasers.push(level.laser({ x: -1100, y: 1990 }, { x: -1100, y: -2000 }))
             spawn.mapRect(-1112, 1990, 25, 25); //laser entrance
-            lasers.push(level.laser({ x: -600, y: 1990 }, { x: -600, y: -2000 })) ////x, y, width, height, damage = 0.002)
+            lasers.push(level.laser({ x: -600, y: 1990 }, { x: -600, y: -2000 }))
             spawn.mapRect(-612, 1990, 25, 25); //laser entrance
-            lasers.push(level.laser({ x: -100, y: 1990 }, { x: -100, y: -2000 })) ////x, y, width, height, damage = 0.002)
+            lasers.push(level.laser({ x: -100, y: 1990 }, { x: -100, y: -2000 }))
             spawn.mapRect(-112, 1990, 25, 25); //laser entrance
 
             balance.push(level.rotor(-1250, 1755, 400, 25, 0.01, 0, 0.5)) //balance(x, y, width, height, density = 0.001, angle = 0, frictionAir = 0.001, angularVelocity = 0, rotationForce = 0.0005) {
             balance.push(level.rotor(-750, 1755, 400, 25, 0.01, Math.PI / 2, 0.5))
             balance.push(level.rotor(-275, 1675, 550, 32, 0.01, 0, 0.5))
 
-            lasers.push(level.laser({ x: 1610, y: -850 }, { x: -1625, y: -850 })) ////x, y, width, height, damage = 0.002)
-            // spawn.mapRect(1980, -862, 25, 25); //laser entrance
-            // balance.push(level.rotor(1000, -910, 550, 32, 0.01, 0, 0.5))
+            lasers.push(level.laser({ x: 1610, y: -850 }, { x: -1625, y: -850 }))
 
             //left side
             //level entrance
@@ -7409,10 +7427,6 @@ const level = {
             spawn.mapRect(-2025, 1650, 400, 50);
             spawn.mapRect(-2100, -1600, 475, 2925);
             spawn.mapRect(-1675, 1500, 50, 325);
-
-            // spawn.mapRect(-1625, 365, 500, 950);
-            // spawn.mapRect(-1075, 390, 450, 900);
-            // spawn.mapRect(-575, 415, 500, 850);
 
             spawn.mapVertex(-1375, 835, "-250 -475  0 -500  250 -475   250 475  -250 475");
             spawn.mapVertex(-850, 840, "-225 -475  0 -500  225 -475   225 475  -225 475");
@@ -7445,16 +7459,23 @@ const level = {
 
             //ceiling zone
             spawn.mapRect(1200, -1600, 400, 25);
-            spawn.mapRect(-75, -1725, 1075, 25);
+            // spawn.mapRect(-75, -1725, 1075, 25);
+            spawn.mapRect(-75, -1825, 1225, 25);
+
             spawn.mapRect(-575, -1625, 450, 25);
             spawn.mapRect(-1075, -1850, 450, 25);
             spawn.mapRect(-1075, -1425, 450, 25);
             spawn.mapRect(-1675, -1588, 550, 25);
         }
         let buildVerticalFLippedMap = function () { // flip Y with this -> spawn.mapRect(x, -y - h, w, h);
+            //flip button
             buttons.push(level.button(-1895, 1600, 126, true, true, "hsl(330, 100%, 50%)"))
             buttons[buttons.length - 1].isUp = false
             spawn.mapRect(-1675, 2025 - 250, 50, 250);
+
+            //disable laser button
+            buttons.push(level.button(-1500, -1315, 126, true, false, "hsl(330, 100%, 50%)"))
+            buttons[buttons.length - 1].isUp = true
 
             simulation.ephemera.push({
                 name: "buttons up",
@@ -7462,7 +7483,7 @@ const level = {
                 do() {
                     this.count--
                     if (this.count < 0) {
-                        for (let i = 0; i < buttons.length; i++) buttons[i].isUp = true
+                        buttons[0].isUp = true
                         simulation.removeEphemera(this.name);
                         isFlipping = false
                     }
@@ -7520,8 +7541,10 @@ const level = {
             spawn.mapRect(-75, -75 - 200, 575, 200);
             spawn.mapRect(475, -1987 - 50, 550, 50);
             //ceiling zone
+
             spawn.mapRect(1200, 1575, 400, 25);
-            spawn.mapRect(-75, 1700, 1075, 25);
+            spawn.mapRect(-75, 1800, 1225, 25);
+            // spawn.mapRect(-75, 1700, 1075, 25);
             spawn.mapRect(-575, 1625 - 25, 450, 25);
             spawn.mapRect(-1075, 1850 - 25, 450, 25);
 
@@ -7597,55 +7620,53 @@ const level = {
             lasers[lasers.length - 1].look.y = elevator.position.y
             lasers[lasers.length - 1].position.y = elevator.position.y
 
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].draw()
-                if (buttons[i].isUp && !isFlipping) {
-                    // buttons[i].query();
-                    buttons[i].queryPlayer();
-                    if (!buttons[i].isUp) {
-                        isFlipping = true
-                        if (level.isFlipped) {
-                            const normalMap = function () {
-                                level.isFlipped = false
-                                flipAndRemove()
-                                buildMapOutline()
-                                buildNormalMap(); //rewrite flipped version of map
-                                simulation.draw.setPaths() //update map graphics
-                                level.addToWorld()
-                            }
-                            simulation.unFlipCameraVertical(flipAnimationCycles, normalMap)
-                        } else {
-                            const flipMap = function () {
-                                level.isFlipped = true
-                                flipAndRemove()
-                                buildMapOutline()
-                                buildVerticalFLippedMap(); //rewrite flipped version of map
-                                simulation.draw.setPaths() //update map graphics
-                                level.addToWorld()
-                                if (!isSpawned) {
-                                    isSpawned = true
-                                    //spawn second wave of flipped mobs only once
-                                    spawn.randomMob(-1500, -1425, 0);
-                                    spawn.randomMob(-950, -1425, 0);
-                                    spawn.randomMob(-800, -1475, 0);
-                                    spawn.randomMob(-425, -1425, 0);
-                                    spawn.randomMob(850, -1750, 0.1);
-                                    spawn.randomMob(325, -850, 0.1);
-                                    spawn.randomMob(400, -400, 0.2);
-                                    spawn.randomMob(825, -475, 0.2);
-                                    spawn.randomMob(875, -1050, 0.3);
-                                    spawn.randomMob(1425, 1425, 0.4);
-                                    spawn.randomMob(675, 1450, 0.5);
-                                    spawn.randomMob(225, 1475, 0.6);
-                                    spawn.randomMob(-275, 1425, 1);
-                                    spawn.randomMob(-800, 1375, 1);
-
-                                    spawn.secondaryBossChance(700, 1100)
-                                }
-                            }
-                            simulation.flipCameraVertical(flipAnimationCycles, flipMap)
+            buttons[1].draw()
+            buttons[1].query();
+            buttons[0].draw()
+            if (buttons[0].isUp && !isFlipping) {
+                buttons[0].queryPlayer();
+                if (!buttons[0].isUp) {
+                    isFlipping = true
+                    if (level.isFlipped) {
+                        const normalMap = function () {
+                            level.isFlipped = false
+                            flipAndRemove()
+                            buildMapOutline()
+                            buildNormalMap(); //rewrite flipped version of map
+                            simulation.draw.setPaths() //update map graphics
+                            level.addToWorld()
                         }
-                        break
+                        simulation.unFlipCameraVertical(flipAnimationCycles, normalMap)
+                    } else {
+                        const flipMap = function () {
+                            level.isFlipped = true
+                            flipAndRemove()
+                            buildMapOutline()
+                            buildVerticalFLippedMap(); //rewrite flipped version of map
+                            simulation.draw.setPaths() //update map graphics
+                            level.addToWorld()
+                            if (!isSpawned) {
+                                isSpawned = true
+                                //spawn second wave of flipped mobs only once
+                                spawn.randomMob(-1500, -1425, 0);
+                                spawn.randomMob(-950, -1425, 0);
+                                spawn.randomMob(-800, -1475, 0);
+                                spawn.randomMob(-425, -1425, 0);
+                                spawn.randomMob(850, -1750, 0.1);
+                                spawn.randomMob(325, -850, 0.1);
+                                spawn.randomMob(400, -400, 0.2);
+                                spawn.randomMob(825, -475, 0.2);
+                                spawn.randomMob(875, -1050, 0.3);
+                                spawn.randomMob(1425, 1425, 0.4);
+                                spawn.randomMob(675, 1450, 0.5);
+                                spawn.randomMob(225, 1475, 0.6);
+                                spawn.randomMob(-275, 1425, 1);
+                                spawn.randomMob(-800, 1375, 1);
+
+                                spawn.secondaryBossChance(700, 1100)
+                            }
+                        }
+                        simulation.flipCameraVertical(flipAnimationCycles, flipMap)
                     }
                 }
             }
@@ -7692,14 +7713,17 @@ const level = {
             }
         };
         level.customTopLayer = () => {
-            for (let i = 0; i < lasers.length; i++) lasers[i].query()
+            if (buttons[1].isUp) {
+                for (let i = 0; i < lasers.length - 1; i++) lasers[i].query()
+                if (simulation.cycle % 120 > 60) lasers[lasers.length - 1].query()
+            }
             ctx.fillStyle = "#233" //balances center dot
             ctx.beginPath();
             for (let i = 0; i < balance.length; i++) {
                 ctx.moveTo(balance[i].center.x, balance[i].center.y)
                 ctx.arc(balance[i].center.x, balance[i].center.y, 9, 0, 2 * Math.PI);
                 //rotor spins and stops at vertical and horizontal angles
-                if ((simulation.cycle % 140) < 15) {
+                if ((simulation.cycle % 90) < 15) {
                     balance[i].torque = 0.0002 * balance[i].inertia
                 } else if (Math.floor(10 * (balance[i].angle % (Math.PI / 2))) === 0) {
                     Matter.Body.setAngularVelocity(balance[i], balance[i].angularVelocity * 0.1)
@@ -7719,9 +7743,13 @@ const level = {
                 ctx.fillRect(650, -350 - 975, 475, 975);
                 ctx.fillRect(375, -1650 - 400, 750, 400);
                 //ceiling
+
+
+
                 ctx.fillStyle = "rgba(0,0,0,0.04)"
                 ctx.fillRect(1225, 2025 - 450, 350, 450);
-                ctx.fillRect(-50, 1700, 1025, 325);
+                ctx.fillRect(-50, 1800, 1175, 225);
+                // ctx.fillRect(-50, 1700, 1025, 325);
                 ctx.fillRect(-550, 2025 - 425, 400, 425);
                 ctx.fillRect(-1050, 2025 - 625, 400, 625);
                 ctx.fillRect(-1625, 2025 - 450, 475, 450);
@@ -7739,7 +7767,8 @@ const level = {
                 //ceiling
                 ctx.fillStyle = "rgba(0,0,0,0.04)"
                 ctx.fillRect(1225, -2025, 350, 450);
-                ctx.fillRect(-50, -2025, 1025, 325);
+                ctx.fillRect(-50, -2025, 1175, 225);
+                // ctx.fillRect(-50, -2025, 1025, 325);
                 ctx.fillRect(-550, -2025, 400, 425);
                 ctx.fillRect(-1050, -2025, 400, 625);
                 ctx.fillRect(-1625, -2025, 475, 450);
@@ -7753,7 +7782,8 @@ const level = {
 
         spawn.bodyRect(-1662, 1325, 25, 175);
         spawn.bodyRect(-1662, 1825, 25, 175);
-        // spawn.bodyRect(-1662, -1825, 25, 225);
+        // spawn.bodyRect(-1670, 1825, 40, 100);
+        // spawn.bodyRect(-1670, 1925, 40, 75);
 
         spawn.bodyRect(1900, 1875, 100, 125, 0.5);
         spawn.bodyRect(400, 1925, 225, 50, 0.1);
@@ -8544,7 +8574,6 @@ const level = {
         spawn.mapRect(14275, -2375, 1050, 2050);
         spawn.mapRect(13400, -2375, 900, 1125);
 
-
         //blocks on movers
         spawn.bodyRect(-200, 950, 50, 50);
         spawn.bodyRect(-1100, 925, 65, 75);
@@ -8587,23 +8616,38 @@ const level = {
         spawn.randomMob(5425, -950, 0.6);
         spawn.randomMob(3575, 375, 0.6);
         spawn.randomGroup(5300, -1400, 1.3);
+        // if (simulation.difficultyMode > 1 || level.levelsCleared > 1) {
+        //     if (level.levelsCleared > 7) { //T3
+        //         spawn.randomLevelBoss(2025, -1825, ["laserLayerBoss"]);
+        //         spawn.secondaryBossChance(-1900, -1800, ["historyBoss"]);
+        //     } else if (level.levelsCleared > 3) { //T2
+        //         spawn.randomLevelBoss(2025, -1825, ["pulsarBoss", "spawnerBossCulture"]);
+        //         spawn.secondaryBossChance(-1900, -1800, ["blockBoss"]);
+        //     } else {  //T1
+        //         spawn.randomLevelBoss(2025, -1825, ["shieldingBoss"]);
+        //         spawn.secondaryBossChance(-1900, -1800, ["shooterBoss"]);
+        //     }
+        // } else {
+        //     powerUps.spawnBossPowerUp(2800, -1400)
+        // }
         if (simulation.difficultyMode > 1 || level.levelsCleared > 1) {
+            const bossSpawn = [{ x: -1900, y: -1825 }, { x: 2025, y: -1825 }, { x: 950, y: -1825 }, { x: -850, y: -1825 }]
+            const where = bossSpawn[Math.floor(Math.random() * bossSpawn.length)]
             if (level.levelsCleared > 7) { //T3
-                spawn.randomLevelBoss(2025, -1825, ["laserLayerBoss"]);
-                spawn.secondaryBossChance(-1900, -1800, ["historyBoss"]);
+                spawn.randomLevelBoss(where.x, where.y, ["historyBoss", "laserLayerBoss"]);
             } else if (level.levelsCleared > 3) { //T2
-                spawn.randomLevelBoss(2025, -1825, ["pulsarBoss", "spawnerBossCulture"]);
-                spawn.secondaryBossChance(-1900, -1800, ["blockBoss"]);
+                spawn.randomLevelBoss(where.x, where.y, ["blockBoss", "pulsarBoss", "spawnerBossCulture"]);
             } else {  //T1
-                spawn.randomLevelBoss(2025, -1825, ["shieldingBoss"]);
-                spawn.secondaryBossChance(-1900, -1800, ["shooterBoss"]);
+                spawn.randomLevelBoss(where.x, where.y, ["shooterBoss", "shieldingBoss"]);
             }
+            spawn.secondaryBossChance(3486, -557, ["trainBoss"]);
         } else {
             powerUps.spawnBossPowerUp(2800, -1400)
         }
-        //spawn.randomHigherTierMob(4245, -1245)
-        // spawn.randomLevelBoss(2025, -1825, ["pulsarBoss", "shieldingBoss", "laserLayerBoss", "shooterBoss"]);
-        // spawn.secondaryBossChance(-1900, -1800, ["historyBoss", "spawnerBossCulture", "blockBoss"]);
+
+
+
+
         powerUps.spawnStartingPowerUps(11750, -1000);
         powerUps.addResearchToLevel() //needs to run after mobs are spawned
     },

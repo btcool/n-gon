@@ -1,20 +1,23 @@
 ******************************************************** NEXT PATCH **************************************************
 
-each mob tier has a unique health bar style
-  some bosses don't have a health bar
-    reactor bosses and other level specific bosses
+interferometer level balance:
+  top platform is higher
+  lasers cycle on/off faster
+  added a button to disable lasers
+level based laser hazards do 1.14->1.12x default damage
+freezeGrenade gets smaller over time
 
-new tier 3 mob: freezer - it's like grenadier, but it shoots a 2 second freeze zone
-when player is immune to damage the player's transparency flickers
-interest spawns 15->18% of research, and 15->9% of coupling
-rocket-propelled grenade uses 20->5 energy to protect you from explosions 
+ricochet tech extended to include super balls
+
+new constraint: blurry choices
+4 new JUNK tech: pulsating lights, grayscale, blur, hue-rotate
 
 bugs
-  finalBoss spawns the correct boss mob tiers
-  fixed text on CPT symmetry to show correct energy cost with extra high max energy
-  drones from fault tolerance respawn when going through portals
+  planned obsolescence wouldn't eject if it was your first tech
 
 ******************************************************** BUGS ********************************************************
+
+dps side bar is too long sometimes
 
 graphical bug - player can become crouched while not touching the ground if they exit the ground while crouched
 
@@ -24,44 +27,33 @@ n-gon long term goals
   more wild synergies, less balanced for rare combos
   more subtle lore hints and world building
   more secrets
-  indication of when things occur
-    animate start/end of level effects
-      new random mob types in the 2 mob random pool
-        tiers also
-      tech effects
-    draw map animation on all levels
-      draw slower on reactor, interferometer, factory, reservoir, subway, finalBoss
-      show progression in mob types and tiers
+  more indication of when things occur
 
-tier patch issues
-  is pacifist lore run broken?
-  balance
-    it's maybe too cluttered
-      maybe spawn less mobs
-  dps side bar is too long...
-    at 26x dmg
-  I think infinite scaling is still messed up
-    try experiment mode 
-    try testing and U after final Boss
+mob that does very fast tiny little hops, like a little bunny
+  it has extra gravity so it can jump faster
 
-after a mob dies make a missile that aims away from player, but then loops around to hit player
+field tech: - use _____ to refresh current choices  (or give +6 choices for the next 3 tech)
+  which field? (pick one based on the name)
+    pilot wave (choices)
+    wormhole? (alt reality)
+    time dilation (rewind time)
+  or skin tech
+  use 
+    10 health
+    all your energy 
+      produce a new choice for each 30 energy
 
 new class of effects:  for the next 3 runs of n-gon
   offer a research donation and get a random effect
+  new power up type
+    reward for completing reactor
+    large yellow?
   effects
     start with ____ power ups
     the first research is free
     start with ____ duplication
-  how to get?
-    from tech?
-    from JUNK?
-    maybe from something in the late game?
-      reactor reward?
-
-allow multiple stacks of nitinol
-  until the player is just jumping crazy
-
-try disabling camera on reactor level
+    start with ____ damage
+    start with ____ damage reduction
 
 tech:   player behavior challenges
   if you ______ for a level
@@ -77,9 +69,13 @@ how to code?
   ephemera that watches key input states?
   rewrite event listener?
 
-JUNK: Tracepath (literally traces M's path for a bit, sort of like snakeBoss)
+look into locking mouse into the browser again
+  full screen
 
-Gravity could flip on the final level.
+allow multiple stacks of nitinol
+  until the player is just jumping crazy
+
+JUNK: Tracepath (literally traces M's path for a bit, sort of like snakeBoss)
 
 constraint: remove 10% of your tech until the end of the level
   does remove then add give any benefits?
